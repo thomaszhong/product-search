@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xuwei Zhong HW8 CSCI571</title>
+    <!--Bootstrap 4 Library-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <!--Material Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--AngularJS Framework-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+    <!--Angular Material-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.12/angular-material.min.js"></script>
+    <!--Angular Animate-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular-animate.js"></script>
+    <!--Round Progress Bar-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-svg-round-progressbar/0.4.8/roundProgress.min.js"></script>
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="product-search.css">
+</head>
+<body>
+<div ng-app="myApp" ng-cloak ng-controller="myCtrl" class="bg-white">
+    <!--Input Form-->
+    <div class="container my-4">
+        <form name="inputForm" novalidate class="background-dark card text-white">
+            <h2 class="py-4 text-center">Product Search</h2>
+            <div class="form-group row">
+                <label for="keyword" class="col-md-2 offset-md-2"><span class="align-middle">Keyword<span class="required-asterisk">*</span></span></label>
+                <div class="col-md-5">
+                    <input type="text" id="keyword" class="form-control" name="keyword" ng-model="keyword" placeholder="Enter Product Name (eg. iPhone 8)"
+                           required ng-class="{'border-danger':inputForm.keyword.$error.required && inputForm.keyword.$touched}">
+                    <div class="text-danger required-message" ng-if="inputForm.keyword.$error.required && inputForm.keyword.$touched">
+                        Please enter a keyword.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="category" class="col-md-2 offset-sm-2"><span class="align-middle">Category</span></label>
+                <div class="col-md-2">
+                    <select class="custom-select" id="category" name="category" ng-model="category">
+                        <option value="default">All Categories</option>
+                        <option value="art">Art</option>
+                        <option value="baby">Baby</option>
+                        <option value="books">Books</option>
+                        <option value="clothing">Clothing, Shoes & Accessories</option>
+                        <option value="computers">Computers/Tablets & Networking</option>
+                        <option value="health">Health & Beauty</option>
+                        <option value="music">Music</option>
+                        <option value="games">Video Games & Consoles</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 offset-md-2">Condition</label>
+                <div class="col-md-8">
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="new" name="new" ng-model="new">
+                        <label for="new" class="form-check-label">New</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="used" name="used" ng-model="used">
+                        <label for="used" class="form-check-label">Used</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="unspecified" name="unspecified" ng-model="unspecified">
+                        <label for="unspecified" class="form-check-label">Unspecified</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 offset-sm-2">Shipping Options</label>
+                <div class="col-md-8">
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="local" name="local" ng-model="local">
+                        <label for="local" class="form-check-label">Local Pickup</label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input type="checkbox" class="form-check-input" id="free" name="free" ng-model="free">
+                        <label for="free" class="form-check-label">Free Shipping</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="distance" class="col-md-2 offset-sm-2"><span class="align-middle">Distance (Miles)</span></label>
+                <div class="col-md-2"><input type="text" id="distance" class="form-control" placeholder="10" name="distance" ng-model="distance"></div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 offset-sm-2">From<span class="required-asterisk">*</span></label>
+                <div class="col-md-5">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="location" value="here" id="currentLocation" ng-model="location" ng-click="searchText='';selectedItem='';">
+                        <label class="form-check-label" for="currentLocation">Current Location</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="location" value="zipCode" id="zipCode" ng-model="location">
+                        <label class="form-check-label mb-2" for="zipCode">Other. Please specify zip code:</label>
+                    </div>
+                    <div ng-class="{'custom-border-danger':inputForm.zipCode.$touched && inputForm.zipCode.$error.required}">
+                        <md-autocomplete autocomplete="off" md-input-name="zipCode" md-no-cache="true" md-selected-item="selectedItem"
+                                         md-search-text="searchText" md-items="item in getZipCode(searchText)" md-clear-button="false"
+                                         ng-model-options="{allowInvalid:true}" ng-disabled="location=='here'" ng-required="location=='zipCode'"
+                                         ng-pattern="/^\d{5}$/" md-input-class="form-control bg-white">
+                            <md-item-template><span>{{item}}</span></md-item-template>
+                        </md-autocomplete>
+                    </div>
+                    <div class="text-danger required-message" ng-if="inputForm.zipCode.$touched && inputForm.zipCode.$error.required">
+                        Please enter a zip code.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row pb-3">
+                <div class="col-md-10 offset-sm-2">
+                    <button type="submit" class="btn btn-light ml-sm-0 ml-1 " ng-disabled="inputForm.keyword.$invalid || (inputForm.zipCode.$invalid && location == 'zipCode')"
+                            ng-click="searchProducts()"><i class="material-icons align-middle">search</i>Search</button>
+                    <button type="button" class="btn btn-light ml-4" ng-click="reset()"><i class="material-icons align-middle">clear_all</i>Clear</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--List Switch Buttons-->
+    <div class="container">
+        <div class="btn-group-toggle text-center" data-toggle="buttons">
+            <label class="btn shadow-none" ng-class="{'background-black text-white':tableDisplay=='results'}">
+                <input type="radio" name="tableDisplay" value="results" ng-model="tableDisplay">Results
+            </label>
+            <label class="btn shadow-none" ng-class="{'background-black text-white':tableDisplay=='wishList'}">
+                <input type="radio" name="tableDisplay" value="wishList" ng-model="tableDisplay">Wish List
+            </label>
+        </div>
+    </div>
+    <!--Progress Bar-->
+    <div class="container mt-2" ng-if="showProgressBar">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 50%"></div>
+        </div>
+    </div>
+    <div class="container mt-2 slide-enter" ng-if="showProgressBarSlide">
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 50%"></div>
+        </div>
+    </div>
+    <div ng-if="displayResults">
+        <!--Item Title-->
+        <div class="container text-center my-4 slide-leave" ng-if="detailView">
+            <h4>{{itemDetails["title"]}}</h4>
+        </div>
+        <!--Error Message-->
+        <div class="container">
+            <div class="result-table-padding mt-2" ng-if="(tableDisplay=='results'&&numOfPages==0&&!detailView)||(tableDisplay=='wishList'&&localStorageList.length==0&&!detailView)">
+                <div class="alert alert-warning">
+                    No Records.
+                </div>
+            </div>
+        </div>
+        <div class="container result-table-padding slide-leave" ng-if="!detailView">
+            <!--Product Search Results Table-->
+            <div class="table-responsive text-white mt-2" ng-if="tableDisplay == 'results' && numOfPages>0">
+                <div class="row">
+                    <div class="col text-right mb-4" ng-if="numOfPages>0">
+                        <button type="button" class="btn btn-light" ng-disabled="itemId == undefined" ng-click="toggleListDetailView()">
+                            Detail<i class="material-icons align-middle">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-borderless background-dark text-white striped-table-even">
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Shipping</th>
+                        <th>Zip</th>
+                        <th>Seller</th>
+                        <th>Wish List</th>
+                    </tr>
+                    <tr ng-repeat="item in itemsList" ng-class="{'background-select':itemId==item['itemId']}" class="row-hover">
+                        <td>{{currPage * 10 + $index + 1}}</td>
+                        <td><a ng-href="{{item['photo']}}" target="_blank"><img ng-src="{{item['photo']}}" width="105px" height="105px"></a></td>
+                        <td class="text-primary text-nowrap">
+                            <a ng-click="getItemDetails(item['title'],item['itemId'],$index,'results')" class="title">{{item["titleShort"]}}
+                                <md-tooltip md-direction="down">{{item["title"]}}</md-tooltip>
+                            </a>
+                        </td>
+                        <td>${{item["price"]}}</td>
+                        <td class="text-nowrap">{{item["shipping"]}}</td>
+                        <td>{{item["zipCode"]}}</td>
+                        <td>{{item["seller"]}}</td>
+                        <td ng-if="!containsLocalStorage(item['itemId'])">
+                            <button type="button" class="btn btn-light" ng-click="setLocalStorage($index)"><i class="material-icons align-middle">add_shopping_cart</i></button>
+                        </td>
+                        <td ng-if="containsLocalStorage(item['itemId'])">
+                            <button type="button" class="btn btn-light" ng-click="removeLocalStorage(item['itemId'])"><i class="material-icons align-middle text-lightYellow">remove_shopping_cart</i></button>
+                        </td>
+                    </tr>
+                </table>
+                <!--Pagination-->
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" ng-class="{'disabled':currPage==0}"><a href class="page-link text-dark" ng-class="{'grey-out':currPage==0}" ng-click="getPage(currPage-1)">&laquo;&nbsp;&nbsp;Previous</a></li>
+                        <li class="page-item" ng-repeat="i in getNumber(numOfPages) track by $index">
+                            <a href class="page-link" ng-click="getPage($index)" ng-class="{'background-black text-white':currPage==$index,'text-dark':currPage!=$index}">{{$index + 1}}</a>
+                        </li>
+                        <li class="page-item" ng-class="{'disabled':currPage==numOfPages-1}"><a href class="page-link text-dark" ng-class="{'grey-out':currPage==numOfPages-1}" ng-click="getPage(currPage+1)">Next&nbsp;&nbsp;&raquo;</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <!--Wish List Table-->
+            <div class="table-responsive text-white mt-2" ng-if="tableDisplay == 'wishList' && localStorageList.length>0">
+                <div class="row">
+                    <div class="col text-right mb-4">
+                        <button type="button" class="btn btn-light" ng-disabled="itemId == undefined" ng-click="toggleListDetailView()">
+                            Detail<i class="material-icons align-middle">keyboard_arrow_right</i>
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-borderless background-dark text-white striped-table-even">
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Shipping</th>
+                        <th>Seller</th>
+                        <th>Wish List</th>
+                    </tr>
+                    <tr ng-repeat="item in localStorageList" ng-class="{'background-select':itemId==item['itemId']}" class="row-hover">
+                        <td>{{$index + 1}}</td>
+                        <td><a ng-href="{{item['photo']}}" target="_blank"><img ng-src="{{item['photo']}}" width="105px" height="105px"></a></td>
+                        <td class="text-primary text-nowrap">
+                            <a ng-click="getItemDetails(item['title'],item['itemId'],$index,'wishList')">{{item["titleShort"]}}
+                                <md-tooltip md-direction="down">{{item["title"]}}</md-tooltip>
+                            </a>
+                        </td>
+                        <td>${{item["price"]}}</td>
+                        <td class="text-nowrap">{{item["shipping"]}}</td>
+                        <td>{{item["seller"]}}</td>
+                        <td><button type="button" class="btn btn-light" ng-click="removeLocalStorage(item['itemId'])"><i class="material-icons align-middle text-lightYellow">remove_shopping_cart</i></button></td>
+                    </tr>
+                    <tr>
+                        <td></td><td></td><td></td><td></td><td></td>
+                        <th>Total Shopping</th>
+                        <th>${{localStorageSum}}</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!--Tabs for Item Detail Tables-->
+        <div class="container slide-leave" ng-if="detailView">
+            <div class="row">
+                <div class="col text-left">
+                    <button type="button" class="btn btn-light text-left" ng-click="toggleListDetailView()">
+                        <i class="material-icons align-middle">keyboard_arrow_left</i>List
+                    </button>
+                </div>
+                <div class="col text-right">
+                    <a href ng-click="shareWithFacebook()"><img src="http://csci571.com/hw/hw8/Images/facebook.png" width="38.86px"></a>
+                    <span ng-if="!containsLocalStorage(itemId)">
+                    <button type="button" class="btn btn-light" ng-click="setLocalStorage(-1)">
+                        <i class="material-icons align-middle">add_shopping_cart</i>
+                    </button>
+                </span>
+                    <span ng-if="containsLocalStorage(itemId)">
+                    <button type="button" class="btn btn-light" ng-click="removeLocalStorage(itemId)" >
+                        <i class="material-icons align-middle text-lightYellow">remove_shopping_cart</i>
+                    </button>
+                </span>
+                </div>
+            </div>
+            <ul class="nav nav-tabs justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link px-1 px-md-3" href ng-click="getTab('product')" ng-class="{'background-black text-white active':currTab=='product','text-dark':currTab!='product'}">Product</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-1 px-md-3" href ng-click="getTab('photos')" ng-class="{'background-black text-white active':currTab=='photos','text-dark':currTab!='photos'}">Photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-1 px-md-3" href ng-click="getTab('shipping')" ng-class="{'background-black text-white active':currTab=='shipping','text-dark':currTab!='shipping'}">Shipping</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-1 px-md-3" href ng-click="getTab('seller')" ng-class="{'background-black text-white active':currTab=='seller','text-dark':currTab!='seller'}">Seller</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-none d-md-block px-1 px-md-3" href ng-click="getTab('similarProducts')" ng-class="{'background-black text-white active':currTab=='similarProducts','text-dark':currTab!='similarProducts'}">Similar Products</a>
+                    <a class="nav-link d-md-none px-1 px-md-3" href ng-click="getTab('similarProducts')" ng-class="{'background-black text-white active':currTab=='similarProducts','text-dark':currTab!='similarProducts'}">Related</a>
+                </li>
+            </ul>
+            <div class="result-table-padding mt-5" ng-if="(currTab=='photos'&&!hasGooglePhotos)||(currTab=='similarProducts'&&similarItemsList.length==0)">
+                <div class="alert alert-warning">
+                    No Records.
+                </div>
+            </div>
+            <h1>{{searchPhotosList}}</h1>
+            <!--Item Details Table-->
+            <table class="table table-borderless background-dark text-white striped-table-odd" ng-if="currTab=='product'">
+                <tr>
+                    <th>Product Images</th>
+                    <td><span class="text-darkGreen" data-toggle="modal" data-target="#productImages">View Product Images Here</span></td>
+                </tr>
+                <tr ng-if="itemDetails.subtitle">
+                    <th>Subtitle</th>
+                    <td>{{itemDetails["subtitle"]}}</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>${{itemDetails["price"]}}</td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>{{itemDetails["location"]}}</td>
+                </tr>
+                <tr>
+                    <th>Return Policy</th>
+                    <td>{{itemDetails["returnPolicy"]}}</td>
+                </tr>
+                <tr ng-repeat="item in itemDetails['itemSpecifics']">
+                    <th>{{item["Name"]}}</th>
+                    <td>{{item["Value"][0]}}</td>
+                </tr>
+            </table>
+            <!--Google Photo Search Gallery-->
+            <div class="row" id="photoGallery" ng-if="currTab=='photos' && hasGooglePhotos">
+                <div class="col-md p-1">
+                    <a ng-href="{{item}}" target="_blank" ng-repeat="item in searchPhotoList[0] track by $index">
+                        <img class="border-black my-1" ng-src="{{item}}">
+                    </a>
+                </div>
+                <div class="col-md p-1">
+                    <a ng-href="{{item}}" target="_blank" ng-repeat="item in searchPhotoList[1] track by $index">
+                        <img class="border-black my-1" ng-src="{{item}}">
+                    </a>
+                </div>
+                <div class="col-md p-1">
+                    <a ng-href="{{item}}" target="_blank" ng-repeat="item in searchPhotoList[2] track by $index">
+                        <img class="border-black my-1" ng-src="{{item}}">
+                    </a>
+                </div>
+            </div>
+            <!--Shipping Information Table-->
+            <table class="table table-borderless background-dark text-white striped-table-odd" ng-if="currTab=='shipping'">
+                <tr>
+                    <th>Shipping Cost</th>
+                    <td>{{itemOtherInfo["shipping"]}}</td>
+                </tr>
+                <tr>
+                    <th>Shipping Locations</th>
+                    <td>{{itemOtherInfo["shippingLocations"]}}</td>
+                </tr>
+                <tr>
+                    <th>Handling Time</th>
+                    <td>{{itemOtherInfo["handlingTime"]}}</td>
+                </tr>
+                <tr>
+                    <th>Expedited Shipping</th>
+                    <td ng-if="itemOtherInfo['expeditedShipping']=='true'"><i class="material-icons align-middle text-success">done</i></td>
+                    <td ng-if="itemOtherInfo['expeditedShipping']=='false'"><i class="material-icons align-middle text-danger">clear</i></td>
+                </tr>
+                <tr>
+                    <th>One Day Shipping</th>
+                    <td ng-if="itemOtherInfo['oneDayShipping']=='true'"><i class="material-icons align-middle text-success">done</i></td>
+                    <td ng-if="itemOtherInfo['oneDayShipping']=='false'"><i class="material-icons align-middle text-danger">clear</i></td>
+                </tr>
+                <tr>
+                    <th>Return Accepted</th>
+                    <td ng-if="itemOtherInfo['returnAccepted']=='true'"><i class="material-icons align-middle text-success">done</i></td>
+                    <td ng-if="itemOtherInfo['returnAccepted']=='false'"><i class="material-icons align-middle text-danger">clear</i></td>
+                </tr>
+            </table>
+            <!--Seller Information Table-->
+            <table class="table table-borderless background-dark text-white striped-table-odd" ng-if="currTab=='seller'">
+                <tr>
+                    <td colspan="2"><h5 class="text-center">{{itemOtherInfo["seller"]}}</h5></td>
+                </tr>
+                <tr>
+                    <th>Feedback Score</th>
+                    <td>{{itemOtherInfo["feedbackScore"]}}</td>
+                </tr>
+                <tr>
+                    <th>Popularity</th>
+                    <td>
+                        &nbsp;{{itemOtherInfo["popularity"]}}
+                        <div class="round-progress">
+                            <round-progress max="100" current="itemOtherInfo['popularity']" color="#28a745" radius="18" clockwise="false" stroke="2" duration="0"></round-progress>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Feedback Rating Star</th>
+                    <td ng-if="itemOtherInfo['feedbackScore']<10000"><i class="material-icons align-middle" ng-class="starColor">star_border</i></td>
+                    <td ng-if="itemOtherInfo['feedbackScore']>=10000"><i class="material-icons align-middle" ng-class="starColor">stars</i></td>
+                </tr>
+                <tr>
+                    <th>Top Rated</th>
+                    <td ng-if="itemOtherInfo['topRated']=='true'"><i class="material-icons align-middle text-success">done</i></td>
+                    <td ng-if="itemOtherInfo['topRated']=='false'"><i class="material-icons align-middle text-danger">clear</i></td>
+                </tr>
+                <tr ng-if="itemOtherInfo['storeName']">
+                    <th>Store Name</th>
+                    <td>{{itemOtherInfo["storeName"]}}</td>
+                </tr>
+                <tr ng-if="itemOtherInfo['storeName']">
+                    <th>Buy Product At</th>
+                    <td><span ng-click="openStoreURL()" class="text-darkGreen">Store</span></td>
+                </tr>
+            </table>
+            <!--Similar Products List-->
+            <div ng-if="currTab=='similarProducts'">
+                <div class="mt-4 mb-3 row" ng-if="similarItemsList.length > 0">
+                    <div class="col-md-2">
+                        <select class="custom-select col-md" ng-model="sortBy.property" ng-change="sortSimilarItems()">
+                            <option value="default">Default</option>
+                            <option value="title">Product Name</option>
+                            <option value="days">Days Left</option>
+                            <option value="price">Price</option>
+                            <option value="shipping">Shipping Cost</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="custom-select col-md" ng-model="sortBy.order" ng-disabled="sortBy.property=='default'" ng-change="sortSimilarItems()">
+                            <option value="ascending">Ascending</option>
+                            <option value="descending">Descending</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card mb-2 background-dark" ng-repeat="item in similarItemsList.slice(0,5)">
+                    <div class="row no-gutters">
+                        <div class="col-lg-2 pl-4 py-3">
+                            <a ng-href="{{item['photo']}}" target="_blank">
+                                <img ng-src="{{item['photo']}}" width="150px" height="150px">
+                            </a>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="card-body">
+                                <p class="card-text mb-0"><span ng-click="openItemURL(item['itemURL'])" class="text-darkGreen similarItemTitle">{{item["title"]}}</span></p>
+                                <p class="card-text text-lightGreen mb-0">Price: ${{item["price"]}}</p>
+                                <p class="card-text text-lightYellow mb-0">Shipping Cost: ${{item["shipping"]}}</p>
+                                <p class="card-text text-white mb-0">Days Left: {{item["daysLeft"]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-2 background-dark" ng-repeat="item in similarItemsList.slice(5,20)" ng-if="showAllSimilarItems">
+                    <div class="row no-gutters">
+                        <div class="col-lg-2 pl-4 py-3">
+                            <a ng-href="{{item['photo']}}" target="_blank">
+                                <img ng-src="{{item['photo']}}" width="150px" height="150px">
+                            </a>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="card-body">
+                                <p class="card-text text-darkGreen mb-0"><span ng-click="openItemURL(item['itemURL'])" class="text-darkGreen similarItemTitle">{{item["title"]}}</span></p>
+                                <p class="card-text text-lightGreen mb-0">Price: ${{item["price"]}}</p>
+                                <p class="card-text text-lightYellow mb-0">Shipping Cost: ${{item["shipping"]}}</p>
+                                <p class="card-text text-white mb-0">Days Left: {{item["daysLeft"]}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" ng-if="!showAllSimilarItems && similarItemsList.length > 5">
+                    <button type="button" class="btn btn-primary background-black text-white" ng-click="toggleSimilarItemsView()">Show More</button>
+                </div>
+                <div class="text-center" ng-if="showAllSimilarItems && similarItemsList.length > 5">
+                    <button type="button" class="btn btn-primary background-black text-white" ng-click="toggleSimilarItemsView()">Show Less</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Product Photos Modal-->
+    <div class="modal" id="productImages">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Product Images</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="photoSlide" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" ng-repeat="item in itemDetails['photos']" ng-class="{'active':$index == 0}">
+                                <a ng-href="{{item}}" target="_blank">
+                                    <img ng-src="{{item}}" class="d-block w-100 border-round-black p-1">
+                                </a>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" ng-href="#photoSlide" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon background-black"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" ng-href="#photoSlide" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon background-black"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="myApp.js"></script>
+    <script src="myCtrl.js"></script>
+</div>
+</body>
+</html>

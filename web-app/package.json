@@ -1,0 +1,9 @@
+{
+  "name": "product-search",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.16.4",
+    "request": "^2.88.0",
+    "body-parser": "latest"
+  }
+}

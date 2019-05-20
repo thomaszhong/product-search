@@ -17,7 +17,9 @@ import com.wssholmes.stark.circular_score.CircularScoreView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/**
+Shipping Tab fragment
+*/
 public class ShippingTab extends Fragment implements View.OnClickListener{
 
     private View view;

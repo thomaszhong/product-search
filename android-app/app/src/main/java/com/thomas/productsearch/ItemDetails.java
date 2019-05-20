@@ -35,6 +35,9 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
+/**
+Item details activity that holds four fragments.
+*/
 public class ItemDetails extends AppCompatActivity {
     private ProductDetailsTab productDetailsTab;
     private ShippingTab shippingTab;
@@ -55,17 +58,17 @@ public class ItemDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
-
+        //Initialize fragments
         productDetailsTab = new ProductDetailsTab();
         shippingTab = new ShippingTab();
         googlePhotosTab = new GooglePhotosTab();
         similarProductsTab = new SimilarProductsTab();
-
+        //Set toolbar
         Toolbar toolbar = findViewById(R.id.toolbar2);
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
         params.setScrollFlags(0);
         setSupportActionBar(toolbar);
-
+        //Set adapter
         SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         ViewPager mViewPager = findViewById(R.id.container2);
@@ -115,7 +118,7 @@ public class ItemDetails extends AppCompatActivity {
             fab.setImageResource(R.drawable.cart_plus_white);
         }
     }
-
+    //Back button
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -125,7 +128,7 @@ public class ItemDetails extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    //Facebook share feature
     public void facebookShare(View view) {
         String url = "https://www.facebook.com/dialog/share?app_id=1411280842347974&display=page&href="
                 + itemURL + "&hashtag=%23CSCI571Spring2019Ebay&quote=Buy " + URLEncoder.encode(product.getTitle())
@@ -133,7 +136,7 @@ public class ItemDetails extends AppCompatActivity {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(browserIntent);
     }
-
+    //Add and remove from wish list 
     public void toggleWishList(View view) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (sharedPreferences.contains(product.getItemId())) {
@@ -151,7 +154,7 @@ public class ItemDetails extends AppCompatActivity {
                     + " was added to wish list", Toast.LENGTH_SHORT).show();
         }
     }
-
+    
     public void getItemDetails() {
         String url = "http://productsearchandroid-env.upi67yignh.us-west-1.elasticbeanstalk.com/getItemDetails?itemId=" + product.getItemId();
         Log.i("getItemDetailsURL", url);
@@ -230,7 +233,7 @@ public class ItemDetails extends AppCompatActivity {
         });
         requestQueue.add(request);
     }
-
+    
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);

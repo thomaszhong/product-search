@@ -14,6 +14,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+/**
+Adapter used in similar items recycler view
+*/
 public class SimilarItemAdapter extends RecyclerView.Adapter<SimilarItemAdapter.SimilarItemViewHolder> {
 
     private Context context;

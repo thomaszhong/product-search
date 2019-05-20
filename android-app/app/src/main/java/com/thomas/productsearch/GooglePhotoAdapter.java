@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+/**
+Adapter used in Google Photo recycler view
+*/
 public class GooglePhotoAdapter extends RecyclerView.Adapter<GooglePhotoAdapter.GooglePhotoViewHolder>{
 
     private Context context;

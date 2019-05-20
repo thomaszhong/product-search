@@ -1,5 +1,7 @@
 package com.thomas.productsearch;
-
+/**
+Class that stores additional details about a product
+*/
 public class ProductDetails {
     private String storeName;
     private String storeURL;

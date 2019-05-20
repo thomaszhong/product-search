@@ -19,6 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+Product details tab fragment
+*/
 public class ProductDetailsTab extends Fragment {
 
     private View view;

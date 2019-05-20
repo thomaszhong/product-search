@@ -35,7 +35,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+Search tab fragment
+*/
 public class SearchTab extends Fragment implements View.OnClickListener {
 
     private View view;

@@ -30,6 +30,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+Search results activity
+*/
 public class SearchResults extends AppCompatActivity {
 
     private List<Product> productList;

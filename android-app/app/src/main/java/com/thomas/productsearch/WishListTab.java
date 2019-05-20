@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+Wish List tab fragment
+*/
 public class WishListTab extends Fragment {
 
     private View view;

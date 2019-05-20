@@ -1,5 +1,7 @@
 package com.thomas.productsearch;
-
+/**
+Class that stores the information of a similar item
+*/
 public class SimilarItem {
     private String imageURL;
     private String title;

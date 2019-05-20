@@ -1,5 +1,7 @@
 package com.thomas.productsearch;
-
+/**
+Class to store a product information from search result
+*/
 public class Product {
     private String image;
     private String title;

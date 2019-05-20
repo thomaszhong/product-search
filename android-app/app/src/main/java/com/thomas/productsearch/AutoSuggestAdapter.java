@@ -10,6 +10,9 @@ import android.widget.Filterable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+Adapter used in zipcode auto suggest feature
+*/
 public class AutoSuggestAdapter extends ArrayAdapter<String> implements Filterable {
     private List<String> mlistData;
 

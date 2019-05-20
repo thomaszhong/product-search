@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+Similar product tab fragment
+*/
 public class SimilarProductsTab extends Fragment implements AdapterView.OnItemSelectedListener{
 
     private View view;

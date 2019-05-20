@@ -15,7 +15,9 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+Google Photos Tab fragment
+*/
 public class GooglePhotosTab extends Fragment {
 
     private View view;

@@ -1,5 +1,7 @@
 package com.thomas.productsearch;
-
+/**
+Class to store a photo from Google API call
+*/
 public class GooglePhoto {
     private String img;
 

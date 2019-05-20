@@ -2,6 +2,9 @@ package com.thomas.productsearch;
 
 import java.util.Comparator;
 
+/**
+Comparator used to sort similar items
+*/
 public class ProductComparator implements Comparator<SimilarItem> {
 
     private String sortBy;
